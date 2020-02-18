@@ -25,7 +25,7 @@ class CycleGAN():
         self.img_shape = (self.img_rows, self.img_cols, self.channels)
 
         # Configure data loader
-        self.dataset_name = 'monet2photo'
+        self.dataset_name = 'monet2photo'#'ukiyoe2photo'#'vangogh2photo'
         self.data_loader = DataLoader(dataset_name=self.dataset_name,
                                       img_res=(self.img_rows, self.img_cols))
 
@@ -289,33 +289,33 @@ class CycleGAN():
         plt.close()
 
         # Demo (for GIF)
-        imgs_A = self.data_loader.load_img('test2.jpeg')
-        imgs_B = self.data_loader.load_img('test2.jpeg')
+        # imgs_A = self.data_loader.load_img('test2.jpeg')
+        # imgs_B = self.data_loader.load_img('test2.jpeg')
 
-        # Translate images to the other domain
-        fake_B = self.g_AB.predict(imgs_A)
-        fake_A = self.g_BA.predict(imgs_B)
-        # Translate back to original domain
-        reconstr_A = self.g_BA.predict(fake_B)
-        reconstr_B = self.g_AB.predict(fake_A)
+        # # Translate images to the other domain
+        # fake_B = self.g_AB.predict(imgs_A)
+        # fake_A = self.g_BA.predict(imgs_B)
+        # # Translate back to original domain
+        # reconstr_A = self.g_BA.predict(fake_B)
+        # reconstr_B = self.g_AB.predict(fake_A)
 
-        gen_imgs = np.concatenate([imgs_A, fake_B, reconstr_A, imgs_B, fake_A, reconstr_B])
+        # gen_imgs = np.concatenate([imgs_A, fake_B, reconstr_A, imgs_B, fake_A, reconstr_B])
 
-        # Rescale images 0 - 1
-        gen_imgs = 0.5 * gen_imgs + 0.5
+        # # Rescale images 0 - 1
+        # gen_imgs = 0.5 * gen_imgs + 0.5
 
-        titles = ['Original', 'Translated', 'Reconstructed']
-        fig, axs = plt.subplots(r, c)
-        cnt = 0
-        for i in range(r):
-            for j in range(c):
-                axs[i,j].imshow(gen_imgs[cnt])
-                axs[i, j].set_title(titles[j])
-                axs[i,j].axis('off')
-                cnt += 1
-        fig.savefig("images/%s/oe/%d_%d_2.png" % (self.dataset_name, epoch, batch_i))
-        plt.close()
+        # titles = ['Original', 'Translated', 'Reconstructed']
+        # fig, axs = plt.subplots(r, c)
+        # cnt = 0
+        # for i in range(r):
+        #     for j in range(c):
+        #         axs[i,j].imshow(gen_imgs[cnt])
+        #         axs[i, j].set_title(titles[j])
+        #         axs[i,j].axis('off')
+        #         cnt += 1
+        # fig.savefig("images/%s/oe/%d_%d_2.png" % (self.dataset_name, epoch, batch_i))
+        # plt.close()
 
 if __name__ == '__main__':
     gan = CycleGAN()
-    gan.train(epochs=200, batch_size=12, sample_interval=10)
+    gan.train(epochs=200, batch_size=1, sample_interval=50)

@@ -4,7 +4,7 @@ import numpy as np
 import imageio
 import skimage.transform 
 
-dataset_path = '../../../../datasets'
+dataset_path = '../../datasets'
 
 class DataLoader():
     def __init__(self, dataset_name, img_res=(128, 128)):
@@ -53,6 +53,9 @@ class DataLoader():
             for img_A, img_B in zip(batch_A, batch_B):
                 img_A = self.imread(img_A)
                 img_B = self.imread(img_B)
+                
+                img_A = skimage.color.gray2rgb(img_A)
+                img_B = skimage.color.gray2rgb(img_B)
 
                 img_A = skimage.transform.resize(img_A, self.img_res)
                 img_B = skimage.transform.resize(img_B, self.img_res)
